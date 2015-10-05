@@ -1,0 +1,76 @@
+@font-face {
+    font-family: font-futura;
+    src: url(../font/Futura_Md_BT_Bold.ttf);
+}
+
+body {
+  background-image: url("../img/bgglobo.jpg");
+  background-repeat: no-repeat;
+  font-family: font-futura;
+  padding-top: 40px;
+}
+
+footer {
+    /*position: fixed; 
+    bottom: 0px;*/
+}
+
+.footer{text-align: center;}
+
+.gazeta img{ float:center; }
+
+.corpo{ 
+	background: #909090;
+	width: 100%; }
+
+.hora { color: white; }
+
+.faltam { color: red;}
+
+.hrede1, .hevento1{
+	padding-top: 10px;
+	font-size: 4.5em;
+	line-height: 1.5em;
+}
+
+.hrede2, .hevento2{
+	font-size: 6.5em;
+	line-height: 1.5em;
+}
+
+.faltam {color: red;}
+
+.faltam1 {
+	font-size: 6.5em;
+	line-height: 1.5em
+}
+
+.faltam2 {
+	font-size: 6.5em;
+	line-height: 1.5em
+}
+
+.teste, teste1 {background: #9EA1B2;}
+
+.modal1{padding-left: 10px;}
+
+/*.mbotao{text-align: center;}*/
+
+
+/*Página horaRede.html*/
+
+.horaRede{
+	text-align: center;
+	color: white;
+	line-height: 1.5em
+}
+.horaRede1{
+	font-size: 6.5em;
+	line-height: 1.5em
+
+}
+.horaRede2{
+	font-size: 10.5em;
+	line-height: 1.5em
+
+}

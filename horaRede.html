@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js"><!-- A classe 'no-js' é reconhecida pelo javascript modernizr, permitindo que browsers antigos reconheçam corretamente nossas tags -->
+<!--<![endif]-->
+  <head>
+    <meta charset="utf-8">		
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Importante para habilitar os recursos de Responsividade em conjunto com o CSS -->
+		<title>Programação | TV Gazeta</title>
+		<script src="js/jquery-2.1.4.js"></script>
+    <script src="js/bootstrap.js"></script>  
+    <script src="js/jquery.countdown.js"></script>   
+		<link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" media="screen" href="css/style.css"  >
+
+    <script>
+        //Inicio da função para recuperar hora atual
+        function startTime() {
+        var h20 = sessionStorage.getItem("hevento20");
+        var today=new Date();
+        var h=today.getHours();
+        var m=today.getMinutes();
+        var s=today.getSeconds();
+        // add a zero in front of numbers<10
+        h=checkTime(h);
+        m=checkTime(m);
+        s=checkTime(s);
+        var hora=h+":"+m+":"+s;
+
+        document.getElementById('rede2').innerHTML=hora;
+        t=setTimeout('startTime()',100);
+          }
+        //Fim da função
+
+        //Inicio da função para adicionar zero caso o numero seja abaixo de 10   
+        function checkTime(i){
+         if (i<10) {
+             i="0" + i;
+         }
+             return i;
+         }
+         //Fim da função
+
+         //Reset do botão Home
+        $(function($){
+
+          $('#reset').click(function(){
+            if(confirm('Tem certeza?')){
+
+                sessionStorage.clear();
+                location.reload(true);
+            };
+          });
+        });
+        //Fim da Função Faltam
+
+    </script>
+
+
+  </head>
+  <body onload="startTime()">
+		
+		<!-- Início da barra de navegação -->
+       <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                
+                <li class="dropdown">
+                  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a id="fechar">Fechar</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+    <!-- Fim da barra de navegação -->
+    
+    <!-- Início div logo -->        
+            <div class="container">
+            <div class="row">
+            <div class="col-sm-12 gazeta">
+              <img src="img/gazetapgm.png" class="img-responsive center-block" alt="Logo TV Gazeta">
+            </div>
+            </div>
+            </div>
+    <!-- Fim div logo -->
+       
+    <!-- início div hora rede/evento -->
+        <div class="corpo">
+          <div class="container horaRede">
+              <div class="row">
+                <div class="col-sm-12 horaRede1">
+                  <p ><blink>HORÁRIO DA REDE</blink></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 horaRede2">
+                  <p id="rede2"></p>
+                </div>
+              </div>
+              
+          </div>
+        </div>
+      <!-- Fim div hora rede/evento -->
+
+      <!-- Inicio do Rodapé -->
+        <div class="container">
+          <footer>
+          <div class="row">
+            <div class="col-sm-12 footer">
+              <img src="img/logo_footer.png">
+            </div>
+          </div>
+          </footer>
+         </div>
+      <!-- Fim do Rodapé -->
+
+  </body>
+</html>

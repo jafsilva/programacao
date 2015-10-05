@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js"><!-- A classe 'no-js' é reconhecida pelo javascript modernizr, permitindo que browsers antigos reconheçam corretamente nossas tags -->
+<!--<![endif]-->
+  <head>
+    <meta charset="utf-8">		
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Importante para habilitar os recursos de Responsividade em conjunto com o CSS -->
+		<title>Programação | TV Gazeta</title>
+		<script src="js/jquery-2.1.4.js"></script>
+    <script src="js/bootstrap.js"></script> 
+    <script src="js/jquery.countdown.js"></script>   
+		<link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css"  >
+
+    <script>
+        //Inicio da função para recuperar hora atual
+        function startTime() {
+        var h20 = sessionStorage.getItem("hevento20");
+        var today=new Date();
+        var h=today.getHours();
+        var m=today.getMinutes();
+        var s=today.getSeconds();
+        // add a zero in front of numbers<10
+        h=checkTime(h);
+        m=checkTime(m);
+        s=checkTime(s);
+        var hora=h+":"+m+":"+s;
+
+        document.getElementById('rede2').innerHTML=hora;
+        t=setTimeout('startTime()',100);
+
+        
+        //
+          }
+        //Fim da função
+
+        //Inicio da função para adicionar zero caso o numero seja abaixo de 10   
+        function checkTime(i){
+         if (i<10) {
+             i="0" + i;
+         }
+             return i;
+         }
+         //Fim da função
+
+        //Inicio da função para armazenar dados da modal na seessionStorage
+        $(function($){
+            $('#modal').click(function(){
+                var nevento10 = $('#nevento').val();
+                var hevento10 = $('#hevento').val();
+
+                sessionStorage.setItem("nevento20", nevento10);
+                sessionStorage.setItem("hevento20", hevento10);
+               
+            });
+            $('#tempoFade2').click(function(){
+                var fade1 = $('#tempoFade1').val();
+
+                sessionStorage.setItem("tempoFade10", fade1);
+               
+            });
+        });
+        //Fim da Função
+
+        //Inicio da função para recuperar dados da sessionStorage e exibir no html
+        //Se não houver segundos aqui é inserido "00"
+        $(document).ready(function(){
+                var n20 = sessionStorage.getItem("nevento20");
+                var h20 = sessionStorage.getItem("hevento20");
+                
+                var horaSeparada=h20.split(':')
+                var hora1 = horaSeparada[0];
+                var minuto1 = horaSeparada[1];
+                var segundo1 = horaSeparada[2];
+                if(segundo1 == null){
+                  segundo1="00";
+                }
+                var horaConcatenada=hora1+":"+minuto1+":"+segundo1;
+                 $('#hevento1').append(n20);
+                 $('#hevento2').append(horaConcatenada);
+
+
+             });
+        //Fim da Função
+
+
+        //Início da Função Faltam
+        $(function($){
+          $(document).ready(function(){
+
+               //Se não houver segundos aqui é inserido "00"
+                var hora = sessionStorage.getItem("hevento20");
+                var horaSep=hora.split(':')
+                var hora1 = horaSep[0];
+                var minuto1 = horaSep[1];
+                var segundo1 = horaSep[2];
+                if(segundo1 == null){
+                  segundo1="00";
+                }
+                var hora10=hora1+":"+minuto1+":"+segundo1;
+               
+
+
+
+
+
+
+                var fade10 = sessionStorage.getItem("tempoFade10");
+                var dataAtual=new Date();
+                var ano=dataAtual.getFullYear();
+                var mes=dataAtual.getMonth()+1;
+                var dia=dataAtual.getDate();
+                
+                if (hora != null){
+                
+                if(mes < 10){
+                  mes= ("0"+mes);
+                }
+
+                if(dia < 10){
+                  dia= ("0"+dia);
+                }
+                var dataCorreta=ano+"/"+mes+"/"+dia;
+                var dataCompleta=dataCorreta+" "+hora;
+               
+                $('#faltam2').countdown(dataCompleta, function(event) {
+                var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+                if(totalHours < 10){
+                  totalHours= ("0"+totalHours);
+                }
+                if(event.strftime(totalHours)==0 && event.strftime('%M')==0 && event.strftime('%S')==0 ) {
+                      if(fade10 != null){
+                      fade();
+                       }
+                  } 
+                 $(this).html(event.strftime(totalHours + ':%M:%S'));          
+                });
+
+                  }
+
+            //Função que recebe o valores da modal fade e soma com hora do evento
+             function fade(){
+
+              
+                //separa os valores dos campos em horas minutos e segundos
+                var horaIni = hora10.split(':');
+                var horaFim = fade10.split(':');
+                //converte os valores para a base 10(deciaml)
+                var horasTotal = parseInt(horaIni[0], 10) + parseInt(horaFim[0], 10);
+                var minutosTotal=parseInt(horaIni[1], 10) + parseInt(horaFim[1], 10);
+                var segundosTotal=parseInt(horaIni[2], 10) + parseInt(horaFim[2], 10);
+                //quando passar de 60 segundos acrescente 1 na casa do minuto e utilize o restante de segundos
+                if(segundosTotal>=60){
+                        //alert("If segundosTotal");
+                        segundosTotal -= 60;
+                        minutosTotal += 1;
+                    }
+                //quando passar de 60 minutos acrescente 1 na casa hora e utilize o restante de minutos
+                if(minutosTotal>=60){
+                    minutosTotal -=60;
+                    horasTotal +=1;
+                }
+
+                //IFS para tratar se houver menor que 10 acrescente "0" a esquerda do numero para ficar no padrao
+                if(horasTotal<10){
+                  horasTotal= ("0"+horasTotal);
+                }
+                if(minutosTotal<10){
+                  minutosTotal= ("0"+minutosTotal);
+                }
+
+                  if(segundosTotal<10){
+                  segundosTotal= ("0"+segundosTotal);
+                }
+
+                var horaCompleta=horasTotal+":"+minutosTotal+":"+segundosTotal;
+                var tempoTotal=dataCorreta+" "+horaCompleta;
+                //alert(tempoTotal);
+
+
+                alert(tempoTotal);
+
+
+                /*$('#faltam2').countdown(tempoTotal, function(event) {
+                var horafade = event.offset.totalDays * 24 + event.offset.hours;
+                if(horafade < 10){
+                  horafade= ("0"+horafade);
+                } 
+                 $(this).html(event.strftime(horafade + ':%M:%S'));          
+                });*/
+                
+
+
+             
+
+              $('#hevento0102').css({color:"#FFFF00"});
+              $('#hevento01').html("FIM DO FADE:");
+              $('#hevento2').html(horaCompleta);
+
+              sessionStorage.removeItem("hevento20");
+              window.location.replace('horaRede.html')
+          }
+        
+          });
+          });
+        //Fim da Função Faltam
+
+       // Função que recebe LInk Para resetar sessionStorage completamente
+        $(function($){
+
+          $('#reset').click(function(){
+            if(confirm('Tem certeza?')){
+
+                sessionStorage.clear();
+                location.reload(true);
+            };
+          });
+        });
+        //Fim da Função resetar
+
+    </script>
+
+
+  </head>
+  <body onload="startTime()">
+		
+		<!-- Início da barra de navegação -->
+       <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                
+                <li class="dropdown">
+                  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a data-toggle="modal" data-target="#editar1">Início do Evento</a></li>
+                    <li><a data-toggle="modal" data-target="#tempoFade">Tempo do Fade</a></li>
+                    <li><a id="horaRede" href="horaRede.html">Hora da Rede</a></li>
+                    <li><a id="reset">Reset</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a id="fechar">Fechar</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+		<!-- Fim da barra de navegação -->
+    
+    <!-- Início div logo -->        
+            <div class="container">
+            <div class="row">
+            <div class="col-sm-12">
+              <img src="img/gazetapgm.png" class="img-responsive center-block" alt="Logo TV Gazeta">
+            </div>
+            </div>
+            </div>
+    <!-- Fim div logo -->
+       
+    <!-- início div hora rede/evento -->
+        <div class="corpo">
+          <div class="container hora">
+              <div class="row">
+                <div class="col-sm-8 hrede1">
+                  <p>HORÁRIO DA REDE:</p>
+                </div>
+                <div class="col-sm-4 hrede2">
+                  <p id="rede2"></p>
+                </div>
+              </div>
+              <div id="hevento0102" class="row">
+                <div class="col-sm-8 hevento1">
+                    <p id="hevento01">INÍCIO DO <span id="hevento1"></span>:</p>
+                  
+                </div>
+                <div class="col-sm-4 hevento2">
+                    <p id="hevento2"></p>
+                </div>
+              </div>
+          </div>
+        </div>
+      <!-- Fim div hora rede/evento -->
+      
+      <!-- início div faltam -->
+        <div class="container faltam">
+           <div class="row">
+            <div class="col-sm-8 faltam1">
+              <p>FALTAM:</p>
+            </div>
+            <div class="col-sm-4 faltam2">
+              <p id="faltam2" ></p>
+            </div>
+          </div>
+        </div>
+      <!-- fim div faltam -->
+
+      <!-- Inicio do Rodapé -->
+        <div class="container">
+          <footer>
+          <div class="row">
+          <div class="col-sm-12 footer">
+            <img src="img/logo_footer.png">
+          </div>
+          </div>
+          </footer>
+         </div>
+      <!-- Fim do Rodapé -->
+
+
+
+
+     <!-- Início div Modal inicio do evento-->
+      <div class="modal fade" id="editar1" role="dialog">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+              
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">INÍCIO DO EVENTO</h4>
+              </div>
+
+              <div class="modal-body">
+
+            <form role="form">
+                    <div class="form-group">
+                      <label for="jornal">Jornal</label>
+                      <select id="nevento" class="form-control nevento" autofocus>
+                        <option value="AL1">AL1</option>
+                        <option value="AL2">AL2</option>
+                        <option value="BDAL">BDAL</option>
+                        <option value="G.NOTÍCIAS">G.NOTÍCIAS</option>
+                        <option value="AOVIVO">AOVIVO</option>
+                        <option value="EVENTO">EVENTO</option>
+                        <option value="FADE">FADE</option>
+                        <option value="FLASH">FLASH</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="horaEvento">Hora do Evento</label>
+                      <input id="hevento" class="form-control hevento" type="time" step=1 autofocus required>
+                    </div>
+                    
+              </div>
+              
+
+              <div class="modal-footer mbotao">
+              <button type="reset" class="btn btn-default">Limpar</button>
+              <button type="submit" id="modal" class="btn btn-success">Enviar</button>
+              </div>
+            </form>
+        
+          </div>
+        </div>
+      </div>
+     <!-- Fim div Modal inicio do evento--> 
+
+
+      <!-- Início div Modal tempo do fade-->
+      <div class="modal fade" id="tempoFade" role="dialog">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content"> 
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">FADE</h4>
+              </div>
+
+              <div class="modal-body">
+
+                <form role="form">
+                    <div class="form-group">
+                      <label for="tempoFade">Tempo do Fade</label>
+                      <input id="tempoFade1" class="form-control tempoFade1" type="time" step=1 autofocus required>
+                    </div>
+                    
+              </div>
+              
+
+              <div class="modal-footer mbotao">
+              <button type="reset" class="btn btn-default">Limpar</button>
+              <button type="submit" id="tempoFade2" class="btn btn-success">Enviar</button>
+                    
+              </form>
+
+              </div>
+          </div>
+        </div>
+      </div>
+     <!-- Fim div Modal tempo do fade--> 
+       
+  </body>
+</html>
